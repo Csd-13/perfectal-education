@@ -1,0 +1,42 @@
+# Core Python Dependencies
+setuptools==67.8.0
+wheel==0.40.0
+
+# AI and Machine Learning
+transformers==4.30.2
+torch==2.0.1
+tensorflow==2.12.0
+scikit-learn==1.2.2
+
+# Web and API
+flask==2.3.2
+requests==2.31.0
+fastapi==0.95.2
+
+# Authentication and Security
+cryptography==41.0.1
+pyjwt==2.7.0
+
+# Database
+sqlalchemy==2.0.15
+psycopg2-binary==2.9.6
+
+# Data Processing
+pandas==2.0.1
+numpy==1.24.3
+
+# Testing
+pytest==7.3.1
+coverage==7.2.5
+
+# Logging and Monitoring
+logging==0.5.1.2
+
+# Multilingual Support
+googletrans==3.1.0a0
+language-tool-python==2.8.1
+
+# Development Tools
+black==23.3.0
+flake8==6.0.0
+mypy==1.3.0

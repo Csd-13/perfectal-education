@@ -1,0 +1,61 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --background-color: #f4f6f7;
+    --text-color-dark: #2c3e50;
+    --text-color-light: #ecf0f1;
+}
+
+@font-face {
+    font-family: 'Naskh';
+    src: url('../fonts/Naskh.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Tifinagh';
+    src: url('../fonts/Tifinagh.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Naskh', Arial, sans-serif;
+    direction: rtl;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-dark);
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    padding: 20px;
+}
+
+.content {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#ai-assistant {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#notification-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
