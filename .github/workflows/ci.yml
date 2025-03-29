@@ -1,1 +1,135 @@
+name: Perfectal Education CI
 
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  flutter_test:
+    name: Flutter Test and Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+      - name: Install dependencies
+        run: |
+          cd mobile/flutter
+          flutter pub get
+      - name: Run tests
+        run: |
+          cd mobile/flutter
+          flutter test
+      - name: Build APK
+        run: |
+          cd mobile/flutter
+          flutter build apk --release
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: mobile/flutter/build/app/outputs/flutter-apk/app-release.apk
+
+  python_test:
+    name: Python Backend Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd python
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov
+          pip install -r requirements.txt
+      - name: Test with pytest
+        run: |
+          cd python
+          pytest --cov=src tests/
+
+  rust_test:
+    name: Rust Backend Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+      - name: Build
+        run: |
+          cd rust
+          cargo build --verbose
+      - name: Run tests
+        run: |
+          cd rust
+          cargo test --verbose
+
+  web_lint_and_test:
+    name: Web Lint and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          cd web
+          npm install
+      - name: Lint
+        run: |
+          cd web
+          npm run lint
+      - name: Test
+        run: |
+          cd web
+          npm test
+
+  firebase_deploy_preview:
+    name: Firebase Deploy Preview
+    needs: [flutter_test, python_test, rust_test, web_lint_and_test]
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      - name: Deploy to Firebase Preview Channel
+        run: |
+          cd backend/firebase
+          firebase hosting:channel:deploy pr-${{ github.event.pull_request.number }} --token "${{ secrets.FIREBASE_TOKEN }}"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  security_scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'Perfectal Education'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: reports

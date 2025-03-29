@@ -1,0 +1,16 @@
+/* For smaller screens */
+@media (max-width: 768px) {
+    #app {
+        grid-template-columns: 1fr; /* Stack columns */
+    }
+
+    .sidebar,
+    #notification-panel {
+        position: static; /* No longer fixed */
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #ccc;
+        height: auto;
+        overflow-y: auto;
+    }
+}

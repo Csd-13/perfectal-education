@@ -1,0 +1,42 @@
+name: perfectal_education
+description: A cross-platform educational app powered by AI.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.14.0
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  flutter_gen_runner: ^5.3.2
+
+flutter_gen:
+  output: lib/gen_l10n/ # Optional (default: lib/gen_l10n/)
+  line_length: 80 # Optional (default: 80)
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
+    - assets/translations/
+  fonts:
+    - family: Naskh
+      fonts:
+        - asset: assets/fonts/Naskh.ttf

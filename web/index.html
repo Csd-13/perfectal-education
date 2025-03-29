@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfectal Education</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/responsive.css">
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 </head>
 <body>
     <div id="app">
-        <aside class="sidebar">
-            <!-- Sidebar content from components/sidebar.html -->
+        <header>
+            <h1>Perfectal Education</h1>
+        </header>
+        <aside id="sidebar" class="sidebar">
+            <!-- Sidebar content will be loaded here -->
         </aside>
-        
         <main class="content">
-            <div id="ai-assistant">
-                <!-- AI Assistant interface -->
-            </div>
+            <section id="ai-assistant" class="ai-assistant">
+                <h2>مساعد الذكاء الاصطناعي</h2>
+                <div id="ai-response">
+                    <!-- AI response will be displayed here -->
+                </div>
+                <input type="text" id="user-input" placeholder="اكتب سؤالك هنا">
+                <button id="send-button">إرسال</button>
+            </section>
         </main>
-
-        <div id="notification-panel">
-            <!-- Notification content from components/notification_panel.html -->
-        </div>
+        <aside id="notification-panel" class="notification-panel">
+            <!-- Notification content will be loaded here -->
+        </aside>
     </div>
-
     <script src="scripts/main.js"></script>
-    <script src="scripts/ai_assistant.js"></script>
 </body>
 </html>

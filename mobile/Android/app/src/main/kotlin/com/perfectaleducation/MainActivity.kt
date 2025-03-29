@@ -2,46 +2,29 @@ package com.perfectaleducation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
+import android.content.res.Configuration
+import android.content.Context
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
-}
 
-package com.perfectaleducation.ai
-
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.auth.FirebaseAuth
-
-class MainActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
-    private lateinit var auth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        // Initialize Firebase Authentication
-        auth = FirebaseAuth.getInstance()
-
-        // Setup Navigation
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
+        updateLocale(this, "ar") // Set default locale to Arabic
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            // Redirect to login screen
-            navController.navigate(R.id.authFragment)
-        }
+    fun updateLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val resources = context.resources
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

@@ -1,0 +1,1 @@
+-- Drop users table
