@@ -3,7 +3,7 @@ class AuthenticationService:
         return username == "admin" and password == "password"
 import hashlib
 import secrets
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 from datetime import datetime, timedelta
 
 class AuthenticationService:
